@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "MessageBroker.Microservices.MessageQueue_B.GrpcWebService";
+
+package message;
+
+service MessageService {
+  rpc Add (MessageRequest) returns (EmptyReply) {}
+}
+
+message EmptyReply {
+}
+
+message MessageRequest {
+    string content = 1;
+    int32 priority = 2;
+}

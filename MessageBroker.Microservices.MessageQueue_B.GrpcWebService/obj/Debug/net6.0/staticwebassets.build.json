@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "45wdh0wNEYtRf0J6Nr6Mo8DmLinxhulyMQdu4hmznac=",
+  "Source": "MessageBroker.Microservices.MessageQueue_B.GrpcWebService",
+  "BasePath": "_content/MessageBroker.Microservices.MessageQueue_B.GrpcWebService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
