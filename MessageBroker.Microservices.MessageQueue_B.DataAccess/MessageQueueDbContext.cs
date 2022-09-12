@@ -6,7 +6,9 @@ namespace MessageBroker.Microservices.MessageQueue_B.DataAccess;
 
 public class MessageQueueDbContext : DbContext
 {
-
+    public MessageQueueDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+    {
+    }
     public DbSet<MessageNode> MessageNodes { get; set; }
 
     /// <summary>
