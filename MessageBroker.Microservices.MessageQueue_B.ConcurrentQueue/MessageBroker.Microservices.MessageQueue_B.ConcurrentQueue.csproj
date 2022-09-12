@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract\MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.csproj" />
+    </ItemGroup>
+
+</Project>

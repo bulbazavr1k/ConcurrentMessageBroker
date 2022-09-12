@@ -1,4 +1,4 @@
-﻿namespace MessageBroker.Domain;
+﻿namespace MessageBroker.Domain.Contract;
 
 /// <summary>
 /// Priority status enum

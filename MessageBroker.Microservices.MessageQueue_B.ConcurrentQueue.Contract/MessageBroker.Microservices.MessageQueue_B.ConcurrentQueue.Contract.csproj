@@ -5,12 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
     <PropertyGroup>
-        <DocumentationFile>bin\$(Configuration)\MessageBroker.Domain.xml</DocumentationFile>
+        <DocumentationFile>bin\$(Configuration)\MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MessageBroker.Domain.Contract\MessageBroker.Domain.Contract.csproj" />
     </ItemGroup>
+
 </Project>

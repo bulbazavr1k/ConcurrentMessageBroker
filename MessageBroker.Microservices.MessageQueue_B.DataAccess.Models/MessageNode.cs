@@ -10,15 +10,20 @@ public class MessageNode
     /// </summary>
     public Guid Id { get; set; }
     /// <summary>
-    /// Content message
+    /// message content
     /// </summary>
     public string Content { get; set; }
     /// <summary>
-    /// Priority message
+    /// message priority
     /// </summary>
     public MessagePriority Priority { get; set; }
     /// <summary>
-    /// DateTime update message
+    /// message update DateTime
     /// </summary>
     public DateTime DateUpdate { get; set; } = DateTime.Now;
+
+    /// <summary>
+    /// message status
+    /// </summary>
+    public MessageNodeStatus MessageNodeStatus { get; set; } = MessageNodeStatus.Created;
 }

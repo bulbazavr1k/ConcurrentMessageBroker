@@ -9,9 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-builder.Services.AddDbContext<MessageQueueDbContext>(option => 
+/*builder.Services.AddDbContext<MessageQueueDbContext>(option => 
     option.UseNpgsql(builder.Configuration.GetConnectionString("MessageQueueDatabase"), 
-        x => x.MigrationsAssembly("MessageBroker.Microservices.MessageQueue_B.DataAccess")));
+        x => x.MigrationsAssembly("MessageBroker.Microservices.MessageQueue_B.DataAccess")));*/
+
+builder.Services.AddDbContext<MessageQueueDbContext>(options => options.UseInMemoryDatabase(databaseName: "message_queue_db"));
 
 // Additional configuration is required to successfully run gRPC on macOS.
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682

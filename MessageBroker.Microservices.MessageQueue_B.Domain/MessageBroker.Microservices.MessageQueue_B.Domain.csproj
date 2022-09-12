@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\MessageBroker.Microservices.MessageQueue_B.Domain.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\MessageBroker.Domain\MessageBroker.Domain.csproj" />
+      <ProjectReference Include="..\MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract\MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.csproj" />
+      <ProjectReference Include="..\MessageBroker.Microservices.MessageQueue_B.DataAccess\MessageBroker.Microservices.MessageQueue_B.DataAccess.csproj" />
+      <ProjectReference Include="..\MessageBroker.Microservices.MessageQueue_B.Domain.Contract\MessageBroker.Microservices.MessageQueue_B.Domain.Contract.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.1" />
+    </ItemGroup>
+</Project>

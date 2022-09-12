@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using MessageBroker.Microservices.MessageQueue_B.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,6 +6,8 @@ namespace MessageBroker.Microservices.MessageQueue_B.DataAccess;
 
 public class MessageQueueDbContext : DbContext
 {
+
+    public DbSet<MessageNode> MessageNodes { get; set; }
 
     /// <summary>
     ///     Override this method to set defaults and configure conventions before they run. This method is invoked before
@@ -31,6 +34,13 @@ public class MessageQueueDbContext : DbContext
             .ToTable("message_node")
             .HasKey(p => p.Id)
             .HasName("message_node__id__pkey");
+        
+        modelBuilder.Entity<MessageNode>()
+            .Property(p => p.Id)
+            .HasColumnName("id")
+            .HasColumnType("uuid")
+            .HasDefaultValueSql("uuid_generate_v4()")
+            .IsRequired();
         
         modelBuilder.Entity<MessageNode>()
             .Property(p => p.Content)
