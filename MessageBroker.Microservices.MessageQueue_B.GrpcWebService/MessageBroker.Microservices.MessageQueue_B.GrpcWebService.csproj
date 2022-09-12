@@ -6,6 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\MessageBroker.Microservices.MessageQueue_B.GrpcWebService.xml</DocumentationFile>
+    </PropertyGroup>
 
     <ItemGroup>
         <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
@@ -15,10 +18,21 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MessageBroker.Domain\MessageBroker.Domain.csproj" />
+      <ProjectReference Include="..\MessageBroker.Microservices.MessageQueue_B.DataAccess\MessageBroker.Microservices.MessageQueue_B.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>

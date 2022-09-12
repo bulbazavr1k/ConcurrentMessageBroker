@@ -334,3 +334,4 @@ ASALocalRun/
 
 #PostgresPersistense
 docker/postgres/postgres-data/
+obj/
