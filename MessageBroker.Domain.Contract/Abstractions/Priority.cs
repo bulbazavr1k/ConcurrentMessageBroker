@@ -3,7 +3,7 @@
 /// <summary>
 /// Priority status enum
 /// </summary>
-public enum Priority
+public enum Priority : int
 {
     /// <summary>
     /// Low priority

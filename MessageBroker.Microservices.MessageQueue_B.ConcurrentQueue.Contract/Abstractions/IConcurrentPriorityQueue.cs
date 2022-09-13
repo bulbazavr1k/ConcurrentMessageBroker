@@ -6,8 +6,10 @@ namespace MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.Ab
 /// <summary>
 /// Concurrent priority queue
 /// </summary>
-/// <typeparam name="T">Priority status</typeparam>
-public interface IConcurrentPriorityQueue<T> : IProducerConsumerCollection<T>, IReadOnlyCollection<T>
-where T : IPriority
+/// <typeparam name="TElement">Content</typeparam>
+/// <typeparam name="TPriority">Priority</typeparam>
+public interface IConcurrentPriorityQueue<T>
 {
+    bool TryAdd(T item, int priority);
+    bool TryTake(out T item);
 }

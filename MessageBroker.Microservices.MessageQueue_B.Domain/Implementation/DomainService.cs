@@ -40,7 +40,7 @@ public class DomainService : IDomainService
         _messageQueueDbContext.MessageNodes.Add(messageNode);
         await _messageQueueDbContext.SaveChangesAsync();
         var messageCore = _mapper.Map<IMessageCore>(messageNode);
-        _concurrentPriorityQueue.TryAdd(messageCore);
+        //_concurrentPriorityQueue.TryAdd(messageCore);
     }
 
     /// <inheritdoc />

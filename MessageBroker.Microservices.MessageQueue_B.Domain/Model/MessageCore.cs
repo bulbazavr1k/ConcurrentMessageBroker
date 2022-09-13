@@ -6,6 +6,6 @@ namespace MessageBroker.Microservices.MessageQueue_B.Domain.Model;
 public class MessageCore : IMessageCore
 {
     public Guid? Id { get; set; }
-    public string Content { get; set; }
-    public Priority Priority { get; init; }
+    public string Content { get; init; }
+    public int Priority { get; init; }
 }

@@ -18,5 +18,5 @@ public class Message : IPriority
     /// Priority message
     /// </summary>
     /// <example>Medium</example>
-    public Priority Priority { get; init; }        
+    public int Priority { get; init; }        
 }

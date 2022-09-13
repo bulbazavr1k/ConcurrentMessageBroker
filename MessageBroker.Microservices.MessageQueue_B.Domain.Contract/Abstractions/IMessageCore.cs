@@ -15,9 +15,5 @@ public interface IMessageCore : IPriority
     /// <summary>
     /// Content message
     /// </summary>
-    public string Content { get; set; }
-    /// <summary>
-    /// Priority message
-    /// </summary>
-    public Priority Priority { get; init; }
+    public string Content { get; init; }
 }
