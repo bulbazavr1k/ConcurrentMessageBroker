@@ -11,7 +11,11 @@
           "AutoMapper": "11.0.1",
           "Grpc.AspNetCore": "2.40.0",
           "MessageBroker.Domain": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract": "1.0.0",
           "MessageBroker.Microservices.MessageQueue_B.DataAccess": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.Domain": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.Domain.Contract": "1.0.0",
           "Microsoft.EntityFrameworkCore": "6.0.8",
           "Microsoft.EntityFrameworkCore.Design": "6.0.8",
           "Microsoft.EntityFrameworkCore.InMemory": "6.0.8",
@@ -303,6 +307,22 @@
           "MessageBroker.Domain.Contract.dll": {}
         }
       },
+      "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue/1.0.0": {
+        "dependencies": {
+          "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract": "1.0.0"
+        },
+        "runtime": {
+          "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.dll": {}
+        }
+      },
+      "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract/1.0.0": {
+        "dependencies": {
+          "MessageBroker.Domain.Contract": "1.0.0"
+        },
+        "runtime": {
+          "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.dll": {}
+        }
+      },
       "MessageBroker.Microservices.MessageQueue_B.DataAccess/1.0.0": {
         "dependencies": {
           "MessageBroker.Microservices.MessageQueue_B.DataAccess.Models": "1.0.0",
@@ -316,6 +336,27 @@
       "MessageBroker.Microservices.MessageQueue_B.DataAccess.Models/1.0.0": {
         "runtime": {
           "MessageBroker.Microservices.MessageQueue_B.DataAccess.Models.dll": {}
+        }
+      },
+      "MessageBroker.Microservices.MessageQueue_B.Domain/1.0.0": {
+        "dependencies": {
+          "AutoMapper": "11.0.1",
+          "MessageBroker.Domain": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.DataAccess": "1.0.0",
+          "MessageBroker.Microservices.MessageQueue_B.Domain.Contract": "1.0.0"
+        },
+        "runtime": {
+          "MessageBroker.Microservices.MessageQueue_B.Domain.dll": {}
+        }
+      },
+      "MessageBroker.Microservices.MessageQueue_B.Domain.Contract/1.0.0": {
+        "dependencies": {
+          "MessageBroker.Domain": "1.0.0",
+          "MessageBroker.Domain.Contract": "1.0.0"
+        },
+        "runtime": {
+          "MessageBroker.Microservices.MessageQueue_B.Domain.Contract.dll": {}
         }
       }
     }
@@ -581,12 +622,32 @@
       "serviceable": false,
       "sha512": ""
     },
+    "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "MessageBroker.Microservices.MessageQueue_B.DataAccess/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "MessageBroker.Microservices.MessageQueue_B.DataAccess.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MessageBroker.Microservices.MessageQueue_B.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MessageBroker.Microservices.MessageQueue_B.Domain.Contract/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

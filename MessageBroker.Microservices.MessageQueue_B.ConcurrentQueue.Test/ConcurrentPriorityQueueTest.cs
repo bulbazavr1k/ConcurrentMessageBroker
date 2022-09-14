@@ -29,46 +29,26 @@ public class ConcurrentPriorityQueueTest
     public async Task AddQueue()
     {
         var concurrentQueue = new ConcurrentPriorityQueue<MessageCore>();
-        for (var i = 0; i < 5; i++)
+        Parallel.For(0, 50, (x) =>
         {
             var pr = new MessageCore
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid(),
                 Priority = _fixture.CreateInt(0, 10),
                 Content = _fixture.Create<string>()
             };
             concurrentQueue.TryAdd(pr, pr.Priority);
-        }
-
-        var t = concurrentQueue;
-        var cnt = concurrentQueue.Count;
-        for (var i = 0; i < cnt; i++)
+        });
+        for (int i = 0; i < 50; i++)
         {
             if (concurrentQueue.TryTake(out var item))
             {
-                Console.WriteLine(item.Priority);
+                Console.Write($"{item.Priority}|");
             }
             else
             {
-                Console.WriteLine("ERR");
+                Console.WriteLine("queue is empty");
             }
         }
-        /*var list = new List<Task>();
-        for (var i = 0; i < 50; i++)
-        {
-           list.Add(Task.Run(() =>
-           {
-               var pr = new MessageCore
-               {
-                   Id = new Guid(),
-                   Priority = _fixture.Create<Priority>(),
-                   Content = _fixture.Create<string>()
-               };
-               concurrentQueue.TryAdd(pr, (int)pr.Priority);
-           }));
-        }*/
-        
     }
-    
- 
 }

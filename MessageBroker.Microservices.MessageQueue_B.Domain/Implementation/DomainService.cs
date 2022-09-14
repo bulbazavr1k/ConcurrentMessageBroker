@@ -4,6 +4,7 @@ using MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.Abstra
 using MessageBroker.Microservices.MessageQueue_B.DataAccess;
 using MessageBroker.Microservices.MessageQueue_B.DataAccess.Models;
 using MessageBroker.Microservices.MessageQueue_B.Domain.Contract.Abstractions;
+using MessageBroker.Microservices.MessageQueue_B.Domain.Model;
 using Microsoft.Extensions.Logging;
 
 namespace MessageBroker.Microservices.MessageQueue_B.Domain.Implementation;
@@ -39,8 +40,8 @@ public class DomainService : IDomainService
         var messageNode = _mapper.Map<MessageNode>(message);
         _messageQueueDbContext.MessageNodes.Add(messageNode);
         await _messageQueueDbContext.SaveChangesAsync();
-        var messageCore = _mapper.Map<IMessageCore>(messageNode);
-        //_concurrentPriorityQueue.TryAdd(messageCore);
+        var messageCore = _mapper.Map<MessageCore>(messageNode);
+        _concurrentPriorityQueue.TryAdd(messageCore, messageCore.Priority);
     }
 
     /// <inheritdoc />

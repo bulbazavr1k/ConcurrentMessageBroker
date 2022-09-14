@@ -12,11 +12,11 @@ public class Message : IPriority
     /// Text message
     /// </summary>
     /// <example>Hey!</example>
-    public string Content { get; init; }
+    public string Content { get; set; }
     
     /// <summary>
     /// Priority message
     /// </summary>
     /// <example>Medium</example>
-    public int Priority { get; init; }        
+    public int Priority { get; set; }        
 }

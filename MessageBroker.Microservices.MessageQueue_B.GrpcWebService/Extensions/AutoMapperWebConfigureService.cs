@@ -6,13 +6,13 @@ namespace MessageBroker.Microservices.MessageQueue_B.GrpcWebService.Extensions;
 /// <summary>
 /// Add configuration AutoMapper
 /// </summary>
-public static class AutoMapperConfigureService
+public static class AutoMapperWebConfigureService
 {
     /// <summary>
     /// Add Profiles DI
     /// </summary>
     /// <param name="services"></param>
-    public static void AddProfilesAutoMapper(this IServiceCollection services)
+    public static void AddWebAutoMapper(this IServiceCollection services)
     {
         var profiles = typeof(MessageProfile).Assembly.GetTypes().Where(t => t.BaseType == typeof(Profile));
         var mappingConfig = new MapperConfiguration(mc =>

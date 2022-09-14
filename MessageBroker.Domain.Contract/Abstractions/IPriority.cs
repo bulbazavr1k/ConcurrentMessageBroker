@@ -2,5 +2,5 @@
 
 public interface IPriority
 {
-    public int Priority { get; init; }
+    public int Priority { get; set; }
 }

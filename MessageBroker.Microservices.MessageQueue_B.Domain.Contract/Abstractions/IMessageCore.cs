@@ -15,5 +15,5 @@ public interface IMessageCore : IPriority
     /// <summary>
     /// Content message
     /// </summary>
-    public string Content { get; init; }
+    public string Content { get; set; }
 }

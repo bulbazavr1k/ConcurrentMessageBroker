@@ -4,7 +4,7 @@ using MessageBroker.Domain.Contract.Abstractions;
 namespace MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Contract.Abstractions;
 
 /// <summary>
-/// Concurrent priority queue
+/// Concurrent (fine grained b-tree) priority queue
 /// </summary>
 /// <typeparam name="TElement">Content</typeparam>
 /// <typeparam name="TPriority">Priority</typeparam>

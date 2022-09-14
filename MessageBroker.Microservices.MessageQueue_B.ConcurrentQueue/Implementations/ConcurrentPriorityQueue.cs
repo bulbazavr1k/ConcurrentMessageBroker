@@ -11,6 +11,7 @@ namespace MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Implementat
 public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
 {
     private IQueueNode<T>[] _nodes = new QueueNode<T>[100];
+    private int[] _statuses = new int[100];
     private int _count = 0;
     private int _tailIndex = 0;
     private int _headIndex = 0;
@@ -33,11 +34,16 @@ public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
         {
             lock (_nodes)
             {
-                _nodes[countCurrent + 20] = node;
+                _nodes[countCurrent + 20] = default;
+                lock (_statuses)
+                {
+                    _statuses[countCurrent + 20] = 0;
+                }
             }
         }
 
-        MoveUpDefaultComparer(node, countCurrent);
+        MoveUpComparer(node, countCurrent);
+
         return true;
     }
 
@@ -58,8 +64,8 @@ public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
 
         var lastNode = _nodes[lastNodeIndex];
         item = _nodes[0].Content;
-        MoveDownDefaultComparer(lastNode, 0);
-
+        MoveDownComparer(lastNode, 0);
+        _nodes[lastNodeIndex] = default;
 
         return true;
     }
@@ -85,86 +91,63 @@ public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
     /// </summary>
     private const int Arity = 4;
 
-    private void MoveUpDefaultComparer(IQueueNode<T> node, int nodeIndex)
+    private void MoveUpComparer(IQueueNode<T> node, int nodeIndex)
     {
-        try
+        while (nodeIndex > 0)
         {
-            node.NodeLock.WaitOne();
-            while (nodeIndex > 0)
-            {
-                var parentIndex = GetParentIndex(nodeIndex);
-                var parent = _nodes[parentIndex];
-                try
-                {
-                    parent.NodeLock.WaitOne();
-                    while (parent != _nodes[parentIndex])
-                    {
-                        var newParent = _nodes[parentIndex];
-                        newParent.NodeLock.WaitOne();
-                        parent.NodeLock.ReleaseMutex();
-                        parent = newParent;
-                    }
+            var parentIndex = GetParentIndex(nodeIndex);
 
-                    if (node.CompareTo(parent.PriorityCtl) < 0)
-                    {
-                        _nodes[nodeIndex] = parent;
-                        nodeIndex = parentIndex;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                finally
-                {
-                    parent.NodeLock.ReleaseMutex();
-                }
+            while (_nodes[parentIndex] == null)
+            {
             }
 
-            _nodes[nodeIndex] = node;
+            var parent = _nodes[parentIndex];
+            lock (parent)
+            {
+                if (node.CompareTo(parent.PriorityCtl) < 0)
+                {
+                    _nodes[nodeIndex] = parent;
+                    Interlocked.Exchange(ref nodeIndex, parentIndex);
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-        finally
-        {
-            node.NodeLock.ReleaseMutex();
-        }
+
+        _nodes[nodeIndex] = node;
     }
 
     /// <summary>
     /// Moves a node down in the tree to restore heap order.
     /// </summary>
-    private void MoveDownDefaultComparer(IQueueNode<T> node, int nodeIndex)
+    private void MoveDownComparer(IQueueNode<T> node, int nodeIndex)
     {
-        try
+        int i;
+        while ((i = GetFirstChildIndex(nodeIndex)) < _count)
         {
-            node.NodeLock.WaitOne();
-            int i;
-            while ((i = GetFirstChildIndex(nodeIndex)) < _count)
+            lock (_nodes[i])
             {
                 var minChild = _nodes[i];
-                try
+                while (minChild != _nodes[i])
                 {
-                    minChild.NodeLock.WaitOne();
-                    while (minChild != _nodes[i])
-                    {
-                        var newMinChild = _nodes[i];
-                        newMinChild.NodeLock.WaitOne();
-                        minChild.NodeLock.ReleaseMutex();
-                        minChild = newMinChild;
-                    }
+                    var newMinChild = _nodes[i];
+                    newMinChild.NodeLock.WaitOne();
+                    minChild.NodeLock.ReleaseMutex();
+                    minChild = newMinChild;
+                }
 
-                    var minChildIndex = i;
+                var minChildIndex = i;
 
-                    var childIndexUpperBound = Math.Min(i + Arity, _count);
-                    while (++i < childIndexUpperBound)
+                var childIndexUpperBound = Math.Min(i + Arity, _count);
+                while (++i < childIndexUpperBound)
+                {
+                    lock (_nodes[i])
                     {
                         var nextChild = _nodes[i];
 
-                        nextChild.NodeLock.WaitOne();
+                        // nextChild.NodeLock.WaitOne();
 
                         while (nextChild != _nodes[i])
                         {
@@ -174,57 +157,25 @@ public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
                             nextChild = newNextChild;
                         }
 
-                        try
-                        {
-                            if (nextChild.CompareTo(minChild.PriorityCtl) < 0)
-                            {
-                                minChild = nextChild;
-                                minChildIndex = i;
-                            }
-                            else
-                            {
-                                nextChild.NodeLock.ReleaseMutex();
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                            throw;
-                        }
+                        if (nextChild.CompareTo(minChild.PriorityCtl) >= 0) continue;
+                        minChild = nextChild;
+                        minChildIndex = i;
                     }
+                }
 
-                    // Heap property is satisfied; insert node in this location.
-                    if (node.CompareTo(minChild.PriorityCtl) <= 0)
-                    {
-                        break;
-                    }
+                // Heap property is satisfied; insert node in this location.
+                if (node.CompareTo(minChild.PriorityCtl) <= 0)
+                {
+                    break;
+                }
 
-                    // Move the minimal child up by one node and
-                    // continue recursively from its location.
-                    _nodes[nodeIndex] = minChild;
-                    nodeIndex = minChildIndex;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                finally
-                {
-                    minChild.NodeLock.ReleaseMutex();
-                }
+                // Move the minimal child up by one node and
+                // continue recursively from its location.
+                _nodes[nodeIndex] = minChild;
+                nodeIndex = minChildIndex;
             }
+        }
 
-            _nodes[nodeIndex] = node;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-        finally
-        {
-            node.NodeLock.ReleaseMutex();
-        }
+        _nodes[nodeIndex] = node;
     }
 }
