@@ -10,8 +10,7 @@ namespace MessageBroker.Microservices.MessageQueue_B.ConcurrentQueue.Implementat
 /// <inheritdoc />
 public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
 {
-    private IQueueNode<T>[] _nodes = new QueueNode<T>[100];
-    private int[] _statuses = new int[100];
+    private IQueueNode<T>[] _nodes = new QueueNode<T>[300];
     private int _count = 0;
     private int _tailIndex = 0;
     private int _headIndex = 0;
@@ -34,11 +33,7 @@ public class ConcurrentPriorityQueue<T> : IConcurrentPriorityQueue<T>
         {
             lock (_nodes)
             {
-                _nodes[countCurrent + 20] = default;
-                lock (_statuses)
-                {
-                    _statuses[countCurrent + 20] = 0;
-                }
+               Array.Resize(ref _nodes, _nodes.Length + _nodes.Length);
             }
         }
 

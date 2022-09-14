@@ -8,6 +8,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <DocumentationFile>bin\$(Configuration)\MessageBroker.Microservices.MessageQueue_B.GrpcWebService.xml</DocumentationFile>
+        <UserSecretsId>46277b40-d0ee-4204-a7b2-500f87ddaf20</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,6 +29,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
     </ItemGroup>
 

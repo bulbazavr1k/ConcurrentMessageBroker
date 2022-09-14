@@ -1,0 +1,48 @@
+version: '3.4'
+
+services:
+
+  mb-queue-webgrpc:
+    image: mb-queue-webgrpc
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./MessageBroker.Microservices.MessageQueue_B.GrpcWebService/Dockerfile
+    networks:
+      - ks-network
+      
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+  
+    
+    ports:
+      - "5031:80"
+
+  mb-webapi:
+    image: mb-webapi
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./MessageBroker.Microservices.MessageQueue_B.WebAPI/Dockerfile
+    networks:
+      - ks-network
+
+    environment:
+      GrpcConfiguration__Url: "http://mb-queue-webgrpc"
+      
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 200M
+  
+    
+    ports:
+      - "5034:80"
+  
+networks:
+  ks-network:
+    name: ks
